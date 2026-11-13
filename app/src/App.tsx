@@ -276,6 +276,7 @@ function EditEntry({
 }) {
   const [body, setBody] = useState(entry?.body ?? '');
   const [mood, setMood] = useState<Mood | undefined>(entry?.mood);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   if (!entry) {
     return (
@@ -301,13 +302,17 @@ function EditEntry({
       )}
       <textarea className="writer" value={body} onChange={(e) => setBody(e.target.value)} rows={10} />
       <MoodPicker value={mood} onChange={setMood} />
+      {confirmDelete && (
+        <div className="card followup" role="alertdialog" aria-label="Silme onayı">
+          <p>Bu kayıt kalıcı olarak silinecek. Emin misin?</p>
+          <div className="prompt-actions">
+            <button className="ghost danger-text" onClick={() => onDelete(entry.id)}>Evet, sil</button>
+            <button className="ghost" onClick={() => setConfirmDelete(false)}>Vazgeç</button>
+          </div>
+        </div>
+      )}
       <div className="edit-actions">
-        <button
-          className="danger"
-          onClick={() => {
-            if (confirm('Bu kaydı silmek istediğine emin misin?')) onDelete(entry.id);
-          }}
-        >
+        <button className="danger" onClick={() => setConfirmDelete(true)}>
           Sil
         </button>
         <button

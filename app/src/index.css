@@ -15,7 +15,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #1b1916;
     --surface: #25221e;
     --text: #ece5da;
@@ -27,6 +27,19 @@
     --danger: #e08a74;
     color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1b1916;
+  --surface: #25221e;
+  --text: #ece5da;
+  --muted: #a39887;
+  --accent: #7fb79c;
+  --accent-text: #13201a;
+  --accent-soft: #2c3a33;
+  --border: #3a352e;
+  --danger: #e08a74;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -63,7 +76,9 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
 
 .content {
   flex: 1;
-  padding: calc(env(safe-area-inset-top) + 24px) 16px 110px;
+  padding-block: 24px 110px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
 .card {
@@ -90,6 +105,8 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
   font-size: 0.925rem;
 }
 .ghost:hover { background: var(--accent-soft); }
+
+.danger-text { color: var(--danger); }
 
 .danger {
   padding: 14px 20px;
@@ -178,7 +195,9 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
   display: flex;
   justify-content: center;
   gap: 8px;
-  padding: 8px 16px calc(env(safe-area-inset-bottom) + 8px);
+  padding-block: 8px calc(env(safe-area-inset-bottom, 0px) + 8px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--border);
